@@ -1,0 +1,26 @@
+{
+  "name": "picasso",
+  "version": "1.0.0",
+  "description": "image file hosting",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "image-hosting"
+  ],
+  "author": "average",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "helmet": "^4.6.0",
+    "serve-favicon": "^2.5.0",
+    "winston": "^3.3.3",
+    "winston-daily-rotate-file": "^4.5.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}

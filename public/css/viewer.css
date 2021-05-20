@@ -1,0 +1,26 @@
+body {
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    margin: 0;
+}
+h1, h2 {
+    margin: 0px auto;
+    color: white;
+    font-family: 'Ubuntu', sans-serif;
+}
+#block {
+    display: block;
+    margin-left: 55px;
+    margin-right: 55px;
+    top: 25px;
+    position: relative;
+}
+h1 {
+    letter-spacing: 1px;
+}
+h2 {
+    color: rgb(255, 0, 0) ;
+    margin-top: 25px;
+    letter-spacing: 0.5px;
+}
