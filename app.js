@@ -6,7 +6,10 @@ const fs = require("fs");
 const { extname } = require("path");
 const favicon = require("helmet");
 const cors = require("cors");
+const morgan = require("morgan");
+const rfs = require("rotating-file-stream");
 const logger = require("./logger");
+const path = require("path");
 const PORT = 80;
 
 let files = fs.readdirSync(`${__dirname}/public/img`);
@@ -20,7 +23,13 @@ app.use(fileUpload());
 app.use(cors());
 app.use(express.static(__dirname + "/public"));
 app.use(favicon(__dirname + "/public/favicon.ico"));
+app.use(morgan("combined"));
 app.disable("x-powered-by");
+const accessLogStream = rfs.createStream('access.log', {
+	interval: '1d', // rotate daily
+	path: path.join(__dirname, 'log')
+});
+app.use(morgan('combined', { stream: accessLogStream }));
 files.sort(function(a, b) {
 	// ASC  -> a.length - b.length
 	// DESC -> b.length - a.length
@@ -33,16 +42,13 @@ if (files.length != 0) {
 	const match = files[0].match(/^[0-9]+/g);
 	id = parseInt(match);
 	console.log(files);
-	logger.info(`Figured out the latest img file. File: ${files[0]}`);
 }
 else {
-	logger.info("No files in img/. Starting file names from 0.");
 	id = -1;
 }
 
 app.get("/:value", (req, res) => {
 	if (files.includes(req.params.value)) {
-		logger.info(`Received GET request for an img. Sending response with img /img/${req.params.value}`);
 		return res.sendFile(`${__dirname}/public/img/${req.params.value}`);
 	}
 	else {
@@ -51,9 +57,6 @@ app.get("/:value", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-	// 	V Clients IP
-	console.log(req.headers["x-forwarded-for"] || req.connection.remoteAddress);
-	logger.info("GET request received at index");
 	res.sendFile(`${__dirname}/public/html/index.html`);
 });
 
@@ -76,5 +79,5 @@ app.post("/upload", (req, res) => {
 });
 
 app.listen(PORT, () => {
-	console.log(`App listening at .${PORT}`);
+	logger.info(`App listening at .${PORT}`);
 });
