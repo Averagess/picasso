@@ -1,4 +1,4 @@
-html {
+body {
     background: #0F2027;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to left, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to left, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
@@ -6,18 +6,39 @@ html {
     width: 100vw;
     margin: 0px;
 }
-body
-div {
+#text-container {
     position: relative;
     display: block;
     width: fit-content;
     height: fit-content;
     margin: auto;
-    margin-top: 45vh;
+    padding-top: 45vh;
+}
+#footer-container {
+    position: absolute;
+    bottom: 0px;
+    background-color: #002535;
+    width: 100vw;
+    height: 25px;
+}
+footer {
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: white;
+    font-family: "Ubuntu", sans-serif;
+}
+#link {
+    color: rgb(21, 255, 0);
+}
+#clock {
+    padding-right: 5px;
+    position:absolute;
+    right: 0;
 }
 h1 {
     color: white;
-    font-size: 85px;
+    font-size: 5vw;
     text-decoration: underline;
     text-decoration-color: #3e443d;
     text-decoration-thickness: 5px;
