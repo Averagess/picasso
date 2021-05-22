@@ -22,7 +22,6 @@ app.use(fileUpload());
 // app.use(helmet());
 app.use(cors());
 app.use(express.static(__dirname + "/public"));
-app.use(favicon(__dirname + "/public/favicon.ico"));
 app.use(morgan("combined"));
 app.disable("x-powered-by");
 const accessLogStream = rfs.createStream('access.log', {
