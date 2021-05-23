@@ -20,6 +20,8 @@ footer {
     padding-right: 5px;
     color: white;
     font-family: "Ubuntu", sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 #link {
     color: rgb(21, 255, 0);
