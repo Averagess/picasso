@@ -9,6 +9,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const rfs = require("rotating-file-stream");
 const logger = require("./logger");
+const rateLimit = require("express-rate-limit");
 const path = require("path");
 const PORT = 80;
 
@@ -19,6 +20,13 @@ fs.watch("./public/img", {}, () => {
 
 const authorizedKeys = ["CIA-222"];
 app.use(fileUpload());
+
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100 // limit each IP to 100 requests per windowMs
+});  
+//  apply to all requests
+app.use(limiter);
 // app.use(helmet());
 app.use(cors());
 app.use(express.static(__dirname + "/public"));
