@@ -1,5 +1,4 @@
 /* eslint-disable prefer-const */
-const moment = require("moment");
 const bigInt = require("big-integer");
 module.exports = {
 	SteamIDConverter: {
