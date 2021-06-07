@@ -80,12 +80,15 @@ app.get("/steamid", (req, res) => {
 app.post("/api/lookup", (req, res) => {
 	if (req.body.steamid) {
 		if (req.body.steamid.toLowerCase().includes("steamcommunity.com/profiles/")) {
+			logger.info("Received API Request for steam profile...");
 			const originalURL = req.body.steamid;
 			const extracted = originalURL.match(/([\d])\w+/g);
 			const steamID64 = extracted[0];
 			const getPlayerSummariesURL = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAMAPIKEY}&steamids=${steamID64}`;
+			logger.info("Reaching out to valve API...");
 			rp(getPlayerSummariesURL)
 				.then(playerRes => {
+					logger.info("Received response from valve API. Parsing data..");
 					const data = JSON.parse(playerRes);
 					const profileData = data.response.players[0];
 					const steamIDS = {
@@ -94,23 +97,27 @@ app.post("/api/lookup", (req, res) => {
 						steamID : SteamIDConverter.toSteamID(steamID64),
 						steamHEXID: decToHex(steamID64).substring(2).toUpperCase(),
 						vanityURL : profileData.profileurl,
-						defaultURL : `https://steamcommunity.com/profiles/${steamID64}`,
+						defaultURL : `https://steamcommunity.com/profiles/${steamID64}/`,
 						personaname : profileData.personaname,
 						avatarfull : profileData.avatarfull,
 						timecreated : profileData.timecreated,
 						personastate : profileData.personastate,
 					};
+					logger.info("Sending parsed Valve data to Client...");
 					res.status(200).send(JSON.stringify(steamIDS));
 				});
 		}
 		else {
+			logger.info("Received API Request for steam profile...");
 			const storage = {};
 			const originalURL = req.body.steamid;
 			const extracted = originalURL.match(/(\w)\w*/g);
 			const URL = extracted.pop().replace("/", "");
 			const resolveVanityURL = `http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=${process.env.STEAMAPIKEY}&vanityurl=${URL}`;
+			logger.info("Reaching out to valve API...");
 			rp(resolveVanityURL)
 				.then(valveRes => {
+					logger.info("Received response from valve API. Parsing data..");
 					const data = JSON.parse(valveRes);
 					const steamID64 = data.response.steamid;
 					const steamIDS = {
@@ -119,7 +126,7 @@ app.post("/api/lookup", (req, res) => {
 						steamID : SteamIDConverter.toSteamID(steamID64),
 						steamHEXID: decToHex(steamID64).substring(2).toUpperCase(),
 						vanityURL : originalURL,
-						defaultURL : `https://steamcommunity.com/profiles/${steamID64}`,
+						defaultURL : `https://steamcommunity.com/profiles/${steamID64}/`,
 					};
 					storage.steamIDS = steamIDS;
 					const getPlayerSummariesURL = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAMAPIKEY}&steamids=${steamID64}`;
@@ -132,6 +139,7 @@ app.post("/api/lookup", (req, res) => {
 							steamIDS.avatarfull = profileData.avatarfull;
 							steamIDS.timecreated = profileData.timecreated;
 							steamIDS.personastate = profileData.personastate;
+							logger.info("Sending parsed Valve data to Client...");
 							res.status(200).send(JSON.stringify(steamIDS));
 						});
 				});
