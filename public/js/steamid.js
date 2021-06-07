@@ -19,7 +19,7 @@ onload = async function() {
 				const payload = {
 					steamid : inputElement.value,
 				};
-				fetch("http://localhost:80/api/lookup", {
+				fetch("http://4verage.xyz/api/lookup", {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
