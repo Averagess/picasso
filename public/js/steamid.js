@@ -29,11 +29,7 @@ onload = async function() {
 					.then(res => res.json())
 					.then(data => {
 						let state;
-						// PLAYING #90ba3c
-
-						// ONLINE #56c9dc
-
-						// OFFLINE #706b6e
+						let customURL;
 						const onlineStates = [1, 2, 3, 4, 5, 6];
 						if (onlineStates.includes(data.personastate)) {
 							state = "#56c9dc";
@@ -41,14 +37,18 @@ onload = async function() {
 						else {
 							state = "#706b6e";
 						}
+						if (data.defaultURL == data.vanityURL) {
+							customURL = "None";
+						}
+						else { customURL = data.vanityURL; }
 						console.log(data);
 						console.log(typeof data);
 						animationElements[0].style.display = "none";
 						boxElement.style.borderWidth = "2px";
 						boxElement.style.backgroundColor = "#13c2ff1c";
 						boxElement.innerHTML = `
-                            <div class="profile" style="width: 110px; height: 110px;">
-                                <h1 style="padding-left: 25px; margin-right: 0px; width: fit-content;"><a href="${data.defaultURL}" target="_blank"><img src="${data.avatarfull}" style="border: 5px solid ${state}"></a>${data.personaname}</h1>
+                            <div class="profile" style="width: fit-content; height: fit-content; display: flex; margin-top: 25px; margin-left: 25px;">
+                                <a href="${data.defaultURL}" target="_blank"><img src="${data.avatarfull}" style="border: 5px solid ${state}"></a><h1 style= margin-right: 0px; width: fit-content;">${data.personaname}</h1>
                             </div>
                             <div class="items" id="itemsBox">
                                 <ul>
@@ -63,7 +63,7 @@ onload = async function() {
                                 <li>Default URL</li>
                                 <p>${data.defaultURL}</p>
                                 <li>Custom URL</li>
-                                <p>${data.vanityURL}</p>
+                                <p>${customURL}</p>
                                 </ul>
                             </div>
                         `;
@@ -71,6 +71,7 @@ onload = async function() {
 			}
 			else {
 				console.log("Invalid link");
+				this.alert(`Your link: "${inputElement.value}" is invalid. Try to submit your Steam link in this format: https://steamcommunity.com/id/CUSTOMURL/ or https://steamcommunity.com/profiles/812701327123773/`);
 			}
 		}
 	};
