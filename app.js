@@ -60,7 +60,7 @@ else {
 	id = -1;
 }
 
-app.get("imgs/:value", (req, res) => {
+app.get("/imgs/:value", (req, res) => {
 	if (files.includes(req.params.value)) {
 		return res.sendFile(`${__dirname}/public/img/${req.params.value}`);
 	}
@@ -167,6 +167,10 @@ app.post("/upload", (req, res) => {
 			res.send(JSON.stringify(successObj));
 		});
 	}
+});
+
+app.get('*', function(req, res) {
+	res.status(404).sendFile(`${__dirname}/public/html/404.html`);
 });
 
 app.listen(PORT, () => {
