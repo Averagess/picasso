@@ -169,7 +169,7 @@ app.post("/upload", (req, res) => {
 	}
 });
 
-app.get('*', function(req, res) {
+app.get("*", function(req, res) {
 	res.status(404).sendFile(`${__dirname}/public/html/404.html`);
 });
 
