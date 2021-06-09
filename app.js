@@ -83,6 +83,7 @@ app.post("/api/lookup", (req, res) => {
 			logger.info("Received API Request for steam profile...");
 			const originalURL = req.body.steamid;
 			const extracted = originalURL.match(/([\d])\w+/g);
+			if (extracted == null) { return res.status(404).send("Account not found."); }
 			const steamID64 = extracted[0];
 			const getPlayerSummariesURL = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAMAPIKEY}&steamids=${steamID64}`;
 			logger.info("Reaching out to valve API...");
@@ -90,6 +91,7 @@ app.post("/api/lookup", (req, res) => {
 				.then(playerRes => {
 					logger.info("Received response from valve API. Parsing data..");
 					const data = JSON.parse(playerRes);
+					if (data.response.players.length == 0) { return res.status(404).send("Account not found.");}
 					const profileData = data.response.players[0];
 					const steamIDS = {
 						steamID64 : steamID64,
@@ -119,6 +121,9 @@ app.post("/api/lookup", (req, res) => {
 				.then(valveRes => {
 					logger.info("Received response from valve API. Parsing data..");
 					const data = JSON.parse(valveRes);
+					console.log(data.response.success);
+					console.log(typeof data.response.success);
+					if (data.response.success != 1) return res.status(404).send("Account not found.");
 					const steamID64 = data.response.steamid;
 					const steamIDS = {
 						steamID64 : steamID64,

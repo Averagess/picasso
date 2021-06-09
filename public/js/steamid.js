@@ -26,8 +26,19 @@ onload = async function() {
 					},
 					body: JSON.stringify(payload),
 				})
-					.then(res => res.json())
+					.then(res => {
+						if (res.status == 404) {
+							throw new Error("invalidAccount");
+						}
+						else if (res.status == 500) {
+							throw new Error("internalError");
+						}
+						else {
+							return res.json();
+						}
+					})
 					.then(data => {
+						console.log(data);
 						let state;
 						let customURL;
 						const onlineStates = [1, 2, 3, 4, 5, 6];
@@ -67,6 +78,19 @@ onload = async function() {
                                 </ul>
                             </div>
                         `;
+					})
+					// Err handling
+					.catch(err => {
+						if (err.message == "invalidAccount") {
+							animationElements[0].style.display = "none";
+							inputElement.style.display = "block";
+							this.alert("That Steam account was not found. Double check your spelling and try again.");
+						}
+						else if (err.message == "internalError") {
+							animationElements[0].style.display = "none";
+							inputElement.style.display = "block";
+							this.alert("Server responded with internal server error. Please try again later.");
+						}
 					});
 			}
 			else {
