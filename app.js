@@ -121,8 +121,6 @@ app.post("/api/lookup", (req, res) => {
 				.then(valveRes => {
 					logger.info("Received response from valve API. Parsing data..");
 					const data = JSON.parse(valveRes);
-					console.log(data.response.success);
-					console.log(typeof data.response.success);
 					if (data.response.success != 1) return res.status(404).send("Account not found.");
 					const steamID64 = data.response.steamid;
 					const steamIDS = {
