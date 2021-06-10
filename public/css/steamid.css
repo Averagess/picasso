@@ -87,6 +87,13 @@ input {
     margin: 0;
 }
 
+#main-content {
+  width: inherit;
+  height: inherit;
+  display: inherit;
+  place-items: center;
+}
+
 #profiledesc {
   padding-left: 0px;
   margin-left: 10px;
