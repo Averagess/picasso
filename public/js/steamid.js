@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+
 onload = async function() {
 	const clockElement = document.getElementById("clock");
 	const inputElement = document.getElementById("input");
@@ -12,14 +13,13 @@ onload = async function() {
 	inputElement.onkeyup = (event) => {
 		if (event.keyCode == 13) {
 			event.preventDefault();
-			console.log(inputElement.value);
 			if (inputElement.value.toLowerCase().includes("steamcommunity.com/id/") || inputElement.value.toLowerCase().includes("id/") || inputElement.value.toLowerCase().includes("steamcommunity.com/profiles/")) {
 				inputElement.style.display = "none";
 				animationElements[0].style.display = "block";
 				const payload = {
 					steamid : inputElement.value,
 				};
-				fetch("https://4verage.xyz/api/lookup", {
+				fetch("http://localhost:80/api/lookup", {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
@@ -38,28 +38,34 @@ onload = async function() {
 						}
 					})
 					.then(data => {
-						console.log(data);
 						let state;
 						let customURL;
-						const onlineStates = [1, 2, 3, 4, 5, 6];
-						if (onlineStates.includes(data.personastate)) {
+						let onlineState;
+						console.log(`Personatestate: ${data.personastate}`);
+						console.log(`Lastlogoff: ${data.lastlogoff}`);
+						if (data.personastate != 0) {
 							state = "#56c9dc";
+							onlineState = "Online";
 						}
 						else {
 							state = "#706b6e";
+							onlineState = "Offline";
 						}
 						if (data.defaultURL == data.vanityURL) {
 							customURL = "None";
 						}
 						else { customURL = data.vanityURL; }
-						console.log(data);
-						console.log(typeof data);
 						animationElements[0].style.display = "none";
 						boxElement.style.borderWidth = "2px";
 						boxElement.style.backgroundColor = "#13c2ff1c";
 						boxElement.innerHTML = `
                             <div class="profile" style="width: fit-content; height: fit-content; display: flex; margin-top: 25px; margin-left: 25px;">
-                                <a href="${data.defaultURL}" target="_blank"><img src="${data.avatarfull}" style="border: 5px solid ${state}"></a><h1 style= margin-right: 0px; width: fit-content;">${data.personaname}</h1>
+                                <a href="${data.defaultURL}" target="_blank"><img src="${data.avatarfull}" style="border: 5px solid ${state}"></a>
+								<!-- <h1 style= margin-right: 0px; width: fit-content;">${data.personaname}</h1> -->
+								<ul id="profiledesc">
+									<li id="username">${data.personaname}</li>
+									<li id="onlinestate" style="color: ${state}">${onlineState}</li>
+								</ul>
                             </div>
                             <div class="items" id="itemsBox">
                                 <ul>
@@ -81,20 +87,17 @@ onload = async function() {
 					})
 					// Err handling
 					.catch(err => {
+						animationElements[0].style.display = "none";
+						inputElement.style.display = "block";
 						if (err.message == "invalidAccount") {
-							animationElements[0].style.display = "none";
-							inputElement.style.display = "block";
 							this.alert("That Steam account was not found. Double check your spelling and try again.");
 						}
 						else if (err.message == "internalError") {
-							animationElements[0].style.display = "none";
-							inputElement.style.display = "block";
 							this.alert("Server responded with internal server error. Please try again later.");
 						}
 					});
 			}
 			else {
-				console.log("Invalid link");
 				this.alert(`Your link: "${inputElement.value}" is invalid. Try to submit your Steam link in this format: https://steamcommunity.com/id/CUSTOMURL/ or https://steamcommunity.com/profiles/812701327123773/`);
 			}
 		}
