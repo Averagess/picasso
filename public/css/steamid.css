@@ -80,7 +80,6 @@ input {
     float: left;
     width: 100px;
     height: 100px;
-    margin-right: 10px;
     border-radius: 10px;
 }
 
@@ -88,6 +87,20 @@ input {
     margin: 0;
 }
 
+#profiledesc {
+  padding-left: 0px;
+  margin-left: 10px;
+}
+
+#username {
+  text-decoration: none;
+  font-size: xx-large;
+}
+
+#onlinestate {
+  text-decoration: none;
+  font-size: large;
+}
 
 .lds-roller {
     display: inline-block;
