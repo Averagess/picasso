@@ -71,10 +71,26 @@ p {
     margin-bottom: 10px;
 }
 
+#inputbox {
+  display: flex;
+}
+
 input {
     width: 50vw;
     height: 25px;
 }
+
+button {
+  height: inherit;
+  width: fit-content;
+  border-radius: 0px;
+  -webkit-appearance: none;
+  text-align: center;
+  margin: 0;
+  cursor: default;
+  background-color: #ffffff;
+}
+
 .profile img {
     float: left;
     width: 100px;
@@ -135,7 +151,7 @@ input {
 }
 
 .help-element {
-  height: 15vh;
+  min-height: 100px;
   text-align: center;
   padding-top: 15px;
   padding-bottom: 15px;
