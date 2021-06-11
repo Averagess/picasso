@@ -1,10 +1,10 @@
 /* eslint-disable no-undef */
-
 onload = async function() {
 	const clockElement = document.getElementById("clock");
 	const inputElement = document.getElementById("input");
 	const boxElement = document.getElementById("box");
 	const animationElements = document.getElementsByClassName("lds-roller");
+
 	setInterval(() => {
 		const time = new Date().toLocaleTimeString();
 		clockElement.innerHTML = time;

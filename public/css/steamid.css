@@ -5,8 +5,7 @@ body {
     height: 100vh;
     width: 100vw;
     margin: 0px;
-    display: grid;
-    place-items: center;
+    overflow-x: hidden;
 }
 #footer-container {
     position: fixed;
@@ -73,7 +72,7 @@ p {
 }
 
 input {
-    width: 500px;
+    width: 50vw;
     height: 25px;
 }
 .profile img {
@@ -90,8 +89,9 @@ input {
 #main-content {
   width: inherit;
   height: inherit;
-  display: inherit;
+  display: grid;
   place-items: center;
+  position: relative;
 }
 
 #profiledesc {
@@ -107,6 +107,67 @@ input {
 #onlinestate {
   text-decoration: none;
   font-size: large;
+}
+
+.arrow {
+  border: solid #fffbfb47;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 25px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  position: absolute;
+  bottom: 15px;
+}
+
+#help-content {
+  display: flex;
+  width: 100vw;
+  height: fit-content;
+  background-color: rgba(0, 255, 255, 0.171);
+  border: 2px solid rgba(141, 141, 141, 0.247);
+  border-right: 0;
+  border-left: 0;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.help-element {
+  height: 15vh;
+  text-align: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-right: 50px;
+  padding-left: 50px;
+}
+
+.help-element h1 {
+  font-size: x-large;
+}
+
+.help-element p {
+  margin: 0px;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #3d3d3d;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(143, 143, 143);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(250, 250, 250);
 }
 
 .lds-roller {
