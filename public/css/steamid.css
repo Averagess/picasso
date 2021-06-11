@@ -95,10 +95,7 @@ input {
   margin: 0em;
   font: 400 13.3333px Arial;
   padding: 1px 2px;
-  border-width: 2px;
-  border-style: inset;
-  border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
-  border-image: initial;
+  border-width: 0;
 }
 
 button {
@@ -110,7 +107,8 @@ button {
   margin: 0;
   cursor: default;
   background-color: #ffffff;
-  border: 0px;
+  border: 1px solid black;
+  border-width: 0px 0px 0px 1px;
   cursor: pointer;
 }
 
@@ -175,11 +173,10 @@ button:active {
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .help-element {
-  min-height: 100px;
   text-align: center;
   padding-top: 15px;
   padding-bottom: 15px;
@@ -196,7 +193,7 @@ button:active {
 }
 /* width */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 3px;
 }
 
 /* Track */
