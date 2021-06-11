@@ -60,8 +60,7 @@ onload = async function() {
 					boxElement.style.backgroundColor = "#13c2ff1c";
 					boxElement.innerHTML = `
 						<div class="profile" style="width: fit-content; height: fit-content; display: flex; margin-top: 25px; margin-left: 25px;">
-							<a href="${data.defaultURL}" target="_blank"><img src="${data.avatarfull}" style="border: 5px solid ${state}"></a>
-							<!-- <h1 style= margin-right: 0px; width: fit-content;">${data.personaname}</h1> -->
+							<a href="${data.defaultURL}" target="_blank"><img src="${data.avatarfull}" style="border: 3px solid ${state}"></a>
 							<ul id="profiledesc">
 								<li id="username">${data.personaname}</li>
 								<li id="onlinestate" style="color: ${state}">${onlineState}</li>

@@ -27,7 +27,7 @@ footer {
     color: rgb(21, 255, 0);
 }
 #clock {
-    padding-right: 5px;
+    margin-right: 5px;
     position:absolute;
     right: 0;
 }
