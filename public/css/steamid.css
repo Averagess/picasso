@@ -76,19 +76,47 @@ p {
 }
 
 input {
-    width: 50vw;
-    height: 25px;
+  width: 50vw;
+  height: 25px;
+  border-radius: 5px 0px 0px 5px;
+  -webkit-appearance: none;
+  text-rendering: auto;
+  color: -internal-light-dark(black, white);
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+  background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
+  -webkit-rtl-ordering: logical;
+  cursor: text;
+  margin: 0em;
+  font: 400 13.3333px Arial;
+  padding: 1px 2px;
+  border-width: 2px;
+  border-style: inset;
+  border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+  border-image: initial;
 }
 
 button {
   height: inherit;
   width: fit-content;
-  border-radius: 0px;
+  border-radius: 0px 5px 5px 0px;
   -webkit-appearance: none;
   text-align: center;
   margin: 0;
   cursor: default;
   background-color: #ffffff;
+  border: 0px;
+  cursor: pointer;
+}
+
+button:active {
+  background-color: rgb(230, 230, 230);
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
 .profile img {
