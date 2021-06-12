@@ -19,7 +19,7 @@ onload = async function() {
 			const payload = {
 				steamid : inputElement.value,
 			};
-			fetch("https://4verage.xyz/api/lookup", {
+			fetch("http://localhost:80/api/lookup", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -87,17 +87,20 @@ onload = async function() {
 				// Err handling
 				.catch(err => {
 					animationElements[0].style.display = "none";
-					inputElement.style.display = "block";
+					inputBox.style.display = "flex";
 					if (err.message == "invalidAccount") {
-						this.alert("That Steam account was not found. Double check your spelling and try again.");
+						this.alert(`That Steam account was not found. ${"\r\n"}Double check your spelling and try again.`);
 					}
 					else if (err.message == "internalError") {
-						this.alert("Server responded with internal server error. Please try again later.");
+						this.alert(`Server responded with internal server error. ${"\r\n"}Please try again later.`);
+					}
+					else {
+						this.alert(`Unexpected error occured :( ${"\r\n"}Please try again.`);
 					}
 				});
 		}
 		else if (inputElement.value) {
-			this.alert(`Your link: "${inputElement.value}" is invalid. Try to submit your Steam link in this format: https://steamcommunity.com/id/CUSTOMURL/ or https://steamcommunity.com/profiles/812701327123773/`);
+			this.alert(`Your link: "${inputElement.value}" was invalid.${"\r\n"}Try to submit your Steam link in this format:${"\r\n"}https://steamcommunity.com/id/CUSTOMURL/,${"\r\n"}or https://steamcommunity.com/profiles/812701327123773/`);
 		}
 	}
 
