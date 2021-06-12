@@ -5,12 +5,20 @@ onload = async function() {
 	const submitButton = document.getElementById("submitb");
 	const inputBox = document.getElementById("inputbox");
 	const boxElement = document.getElementById("box");
+	const resultBox = document.getElementById("result");
 	const animationElements = document.getElementsByClassName("lds-roller");
 
 	setInterval(() => {
 		const time = new Date().toLocaleTimeString();
 		clockElement.innerHTML = time;
 	}, 1000);
+
+	function newSearch() {
+		resultBox.innerHTML = null;
+		boxElement.style.borderWidth = "0px";
+		boxElement.style.backgroundColor = "";
+		inputBox.style.display = "flex";
+	}
 
 	function submit() {
 		if (inputElement.value.toLowerCase().includes("steamcommunity.com/id/") || inputElement.value.toLowerCase().includes("id/") || inputElement.value.toLowerCase().includes("steamcommunity.com/profiles/")) {
@@ -19,7 +27,7 @@ onload = async function() {
 			const payload = {
 				steamid : inputElement.value,
 			};
-			fetch("http://localhost:80/api/lookup", {
+			fetch("https://4verage.xyz/api/lookup", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -41,8 +49,6 @@ onload = async function() {
 					let state;
 					let customURL;
 					let onlineState;
-					console.log(`Personatestate: ${data.personastate}`);
-					console.log(`Lastlogoff: ${data.lastlogoff}`);
 					if (data.personastate != 0) {
 						state = "#56c9dc";
 						onlineState = "Online";
@@ -58,7 +64,8 @@ onload = async function() {
 					animationElements[0].style.display = "none";
 					boxElement.style.borderWidth = "2px";
 					boxElement.style.backgroundColor = "#13c2ff1c";
-					boxElement.innerHTML = `
+					resultBox.innerHTML = `
+						<a class="close"></a>
 						<div class="profile" style="width: fit-content; height: fit-content; display: flex; margin-top: 25px; margin-left: 25px;">
 							<a href="${data.defaultURL}" target="_blank"><img src="${data.avatarfull}" style="border: 3px solid ${state}"></a>
 							<ul id="profiledesc">
@@ -83,6 +90,10 @@ onload = async function() {
 							</ul>
 						</div>
 					`;
+
+					document.getElementsByClassName("close")[0].onclick = () => {
+						newSearch();
+					};
 				})
 				// Err handling
 				.catch(err => {
