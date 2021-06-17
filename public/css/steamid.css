@@ -6,7 +6,68 @@ body {
     width: 100vw;
     margin: 0px;
     overflow-x: hidden;
+    font-family: 'Ubuntu', sans-serif;
 }
+
+nav {
+  position: absolute;
+  z-index: 1;
+  width: 100vw;
+  height: fit-content;
+  background-color: rgba(0, 255, 255, 0.171);
+  border-bottom: 2px solid rgba(141, 141, 141, 0.247)
+}
+
+.nav-items {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: auto;
+  white-space: nowrap;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Old versions of Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome, Edge, Opera and Firefox */
+}
+.nav-items h3 {
+  margin: 5px;
+  font-family: 'Press Start 2P', cursive;
+  color: rgb(255 255 255);
+  font-weight: 200;
+}
+.nav-items a {
+  padding: 5px;
+  margin: 5px;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.nav-items a:hover {
+  color: rgb(177, 176, 176);
+}
+.nav-items a:active {
+  color: rgb(204, 199, 199);
+  box-shadow: 3px 3px rgba(0, 0, 0, 0.103);
+  background-color: rgba(255, 255, 255, 0.048);
+}
+
+#current {
+  padding: 5px;
+  margin: 5px;
+  border: 2px solid rgb(150, 150, 150);
+  border-radius: 10px;
+  color: white;
+  cursor: default;
+}
+
 #footer-container {
     position: fixed;
     bottom: 0px;
@@ -209,11 +270,16 @@ button:active {
 }
 
 .help-element {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
   padding-top: 15px;
   padding-bottom: 15px;
   padding-right: 50px;
   padding-left: 50px;
+  word-break: normal;
+  width: fit-content;
 }
 
 .help-element h1 {
@@ -222,9 +288,12 @@ button:active {
 
 .help-element p {
   margin: 0px;
+  min-width: 30vw;
+  max-width: 40vw;
 }
 /* width */
 ::-webkit-scrollbar {
+  height: 3px;
   width: 3px;
 }
 
