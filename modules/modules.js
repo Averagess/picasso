@@ -118,4 +118,28 @@ module.exports = {
 			return "http://steamcommunity.com/profiles/" + steamid64;
 		},
 	},
+	randomFilename(files) {
+		function generator() {
+			const letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+			let fileName = "";
+			for (let i = 0; i < 5; i++) {
+				if (Math.floor(Math.random() * 2) > 0) {
+					// Current choice is letters
+					const index = Math.floor(Math.random() * letters.length);
+					fileName += letters[index];
+				}
+				else {
+					// Current choice is digits
+					const choice = Math.floor(Math.random() * 9);
+					fileName += choice;
+				}
+			}
+			return fileName.toUpperCase();
+		}
+		let name = generator();
+		while (files.includes(name)) {
+			name = generator();
+		}
+		return name;
+	},
 };

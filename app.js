@@ -5,7 +5,7 @@ const fileUpload = require("express-fileupload");
 const app = express();
 const fs = require("fs");
 const { extname } = require("path");
-const cors = require("cors");
+// const cors = require("cors");
 const morgan = require("morgan");
 const rfs = require("rotating-file-stream");
 const logger = require("./logger");
@@ -15,6 +15,7 @@ const dotenv = require("dotenv");
 const rp = require("request-promise");
 const { decToHex } = require("hex2dec");
 const { SteamIDConverter } = require("./modules/modules.js");
+const { randomFilename } = require("./modules/modules.js");
 const PORT = 80;
 
 let files = fs.readdirSync(`${__dirname}/public/img`);
@@ -34,7 +35,7 @@ const limiter = rateLimit({
 });
 
 app.use(limiter);
-app.use(cors());
+// app.use(cors());
 app.use(express.static(__dirname + "/public"));
 app.use(morgan("combined"));
 app.disable("x-powered-by");
@@ -48,17 +49,6 @@ files.sort(function(a, b) {
 	// DESC -> b.length - a.length
 	return parseInt(b.match((/^[0-9]+/g))) - parseInt(a.match((/^[0-9]+/g)));
 });
-
-let id;
-
-if (files.length != 0) {
-	const match = files[0].match(/^[0-9]+/g);
-	id = parseInt(match);
-	console.log(files);
-}
-else {
-	id = -1;
-}
 
 app.get("/imgs/:value", (req, res) => {
 	if (files.includes(req.params.value)) {
@@ -156,19 +146,22 @@ app.post("/api/lookup", (req, res) => {
 
 app.post("/upload", (req, res) => {
 	if (authorizedKeys.includes(req.headers.apikey)) {
-		id++;
+		const filename = randomFilename(files);
 		const img = req.files.img;
 		const extension = extname(req.files.img.name);
-		const path = `${__dirname}/public/img/${id}${extension}`;
+		const path = `${__dirname}/public/img/${filename}${extension}`;
 		img.mv(path, err => {
 			if (err) return res.status(500).send("Error, File not uploaded");
 			const successObj = {
 				"status": 200,
-				"url": `http://4verage.xyz/imgs/${id}${extension}`,
+				"url": `https://4verage.xyz/imgs/${filename}${extension}`,
 			};
-			logger.info(`Downloaded file ${req.files.img.name} successfully, named it ${id}${extension}, transaction api key: ${req.headers.apikey}`);
+			logger.info(`Downloaded file ${req.files.img.name} successfully, named it ${filename}${extension}, transaction api key: ${req.headers.apikey}`);
 			res.send(JSON.stringify(successObj));
 		});
+	}
+	else {
+		res.status(401).end();
 	}
 });
 
